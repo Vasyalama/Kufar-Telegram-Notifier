@@ -84,10 +84,10 @@
       </h3>
    </summary>
    <ol>
-      <li>Установите curl for windows: [download curl](https://curl.se/windows/)</li>
+      <li>Установите curl for windows: https://curl.se/windows/</li>
       <li>Добавьте <code>{path-to-curl}/include</code> в Path</li>
       <li>
-         Установите cmake: [download cmake](https://cmake.org/download/)</code>
+         Установите cmake: https://cmake.org/download/</code>
       </li>
       <li>
          Cклонируйте репозиторий: <br><code>git clone https://github.com/Vasyalama/Kufar-Telegram-Notifier.git </code>
