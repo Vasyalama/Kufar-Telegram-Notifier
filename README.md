@@ -77,6 +77,30 @@
       </ol>
    </details>
 </details>
+<details>
+   <summary>
+      <h3>
+         Windows
+      </h3>
+   </summary>
+   <ol>
+      <li>Установите curl for windows: [curl.se/windows/](https://curl.se/windows/)</li>
+      <li>Добавьте <code>{path-to-curl}/include</code> в Path</li>
+      <li>
+         Установите make и cmake: [cmake.org/download/](https://cmake.org/download/)</code>
+      </li>
+      <li>
+         Cклонируйте репозиторий: <code>git clone https://github.com/Vasyalama/Kufar-Telegram-Notifier.git </code>
+      </li>
+      <li>С помощью <code>cd</code> перейдите в директорию c проектом <br> <code>cd Kufar-Telegram-Notifier</code></li>
+      <li>Создайте папку build и перейдите в нее <br> <code>mkdir build <br> cd build</code>
+      <li>Соберите исполняемый файл с помощью:<br>
+            <code>cmake .. </code><br>
+            <code>cmake --build .</code>
+      </li>
+      <li>Исполняемый файл соберется в <code>/build/bin</code></li>
+   </ol>
+</details>
 <h2>Конфигурация программы</h2>
 <details>
    <summary>
