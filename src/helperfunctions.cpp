@@ -12,10 +12,10 @@
 #include <iterator>
 #include <algorithm>
 #include <optional>
-#include <unistd.h>
+
 #include <limits.h>
 #include <iostream>
-#include <libgen.h>
+
 
 using namespace std;
 
@@ -86,7 +86,8 @@ void saveFile(const string &path, const string &contents) {
 #ifdef __APPLE__
     #include <mach-o/dyld.h>
     #include <filesystem>
-
+    #include <libgen.h>
+    #include <unistd.h>
     optional<string> getWorkingDirectory() {
         char buffer[PATH_MAX];
         uint32_t buffsize = PATH_MAX;
@@ -99,6 +100,8 @@ void saveFile(const string &path, const string &contents) {
     }
 #elif __linux__
     #include <linux/limits.h>
+    #include <libgen.h>
+    #include <unistd.h>
 
     optional<string> getWorkingDirectory() {
         char result[PATH_MAX];
@@ -106,6 +109,33 @@ void saveFile(const string &path, const string &contents) {
         if (count != -1) {
             return dirname(result);
         }
+        return nullopt;
+    }
+#elif _WIN32
+    #define NOMINMAX  // Prevent Windows.h from defining min/max macros
+    #define WIN32_LEAN_AND_MEAN  // Reduce header bloat
+    #include <windows.h>
+    #include <libloaderapi.h>
+    #include <string>
+    #include <optional>
+
+    optional<string> getWorkingDirectory() {
+        char buffer[MAX_PATH];
+        DWORD length = GetModuleFileNameA(NULL, buffer, MAX_PATH);
+        if (length == 0) {
+            return nullopt;
+        }
+
+        char* lastSlash = strrchr(buffer, '\\');
+        if (!lastSlash) {
+            lastSlash = strrchr(buffer, '/');
+        }
+
+        if (lastSlash) {
+            *lastSlash = '\0';
+            return string(buffer);
+        }
+        
         return nullopt;
     }
 #else

@@ -6,10 +6,12 @@
 //
 
 #include <iostream>
-#include <unistd.h>
 #include <signal.h>
 #include <fstream>
 #include <vector>
+#include <chrono>
+#include <thread>
+
 
 #include "json.hpp"
 #include "kufar.hpp"
@@ -260,20 +262,20 @@ int main(int argc, char **argv) {
                     } else {
                         //cout << "[Already was!]" << endl;
                     }
-                    usleep(300000); // 0.3s
+                    std::this_thread::sleep_for(std::chrono::microseconds(300000)); // 0.3s
                 }
             } catch (const exception &exc) {
                 cerr << "[ERROR (getAds)]: " << exc.what() << endl;
             }
             DEBUG_MSG("[DEBUG]: " << "(QueryDelay) Sleeping for: " << programConfiguration.queryDelaySeconds << "s.");
-            sleep(programConfiguration.queryDelaySeconds);
+            std::this_thread::sleep_for(std::chrono::seconds(programConfiguration.queryDelaySeconds));
             
             if (sentCount > 0) {
                 saveFile(programConfiguration.files.cache.path, ((json)viewedAds).dump());
             }
         }
         DEBUG_MSG("[DEBUG]: " << "(LoopDelay) Sleeping for: " << programConfiguration.loopDelaySeconds << "s.");
-        sleep(programConfiguration.loopDelaySeconds);
+        std::this_thread::sleep_for(std::chrono::seconds(programConfiguration.loopDelaySeconds));
     }
     return 0;
 }
